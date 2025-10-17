@@ -4,11 +4,12 @@ import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Segurança
 SECRET_KEY = os.environ.get('DJ_SECRET_KEY', 'troque-esta-chave-por-uma-secreta')
 DEBUG = os.environ.get('DJ_DEBUG', 'True') == 'True'
+ALLOWED_HOSTS = ['*']  # Em produção, coloque apenas os domínios permitidos
 
-ALLOWED_HOSTS = ['*']
-
+# Apps
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -22,7 +23,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Para servir arquivos estáticos
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -50,12 +51,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'site_demo.wsgi.application'
 
-# Database
+# Banco de Dados
 DATABASES = {
-    'default': dj_database_url.parse(os.environ.get('DATABASE_URL', 'postgresql://wesley_portfolio:tqiwTKN8ro7Hx9tMLAQhI00Hulq8IdgY@dpg-d3oq07pr0fns73doui1g-a.oregon-postgres.render.com/wesley_portfolio_db'), conn_max_age=600)
+    'default': dj_database_url.parse(
+        os.environ.get('DATABASE_URL'),
+        conn_max_age=600,
+        ssl_require=True  # força SSL, necessário no Render
+    )
 }
 
-# Static & Media
+# Arquivos estáticos e de mídia
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'static']
@@ -65,4 +70,5 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # Email (dev)
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'HTTP')
+# Para Render
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
