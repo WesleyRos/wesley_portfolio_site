@@ -2,14 +2,21 @@ from pathlib import Path
 import os
 import dj_database_url
 
+# -----------------------------
+# BASE
+# -----------------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Segurança
-SECRET_KEY = os.environ.get('DJ_SECRET_KEY', 'chave-padrao-para-dev')
-DEBUG = os.environ.get('DJ_DEBUG', 'True') == 'True'
-ALLOWED_HOSTS = ['*']  # Em produção, coloque apenas os domínios permitidos
+# -----------------------------
+# SECURITY
+# -----------------------------
+SECRET_KEY = os.environ.get('DJ_SECRET_KEY', 'troque-esta-chave-por-uma-secreta')
+DEBUG = os.environ.get('DJ_DEBUG', 'False') == 'True'
+ALLOWED_HOSTS = ['*']  # você pode trocar por ['seu-dominio.com'] depois
 
-# Apps
+# -----------------------------
+# APPS
+# -----------------------------
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -21,9 +28,12 @@ INSTALLED_APPS = [
     'crispy_forms',
 ]
 
+# -----------------------------
+# MIDDLEWARE
+# -----------------------------
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # Para servir arquivos estáticos
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # serve static files
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -31,6 +41,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
 ]
 
+# -----------------------------
+# URLS & TEMPLATES
+# -----------------------------
 ROOT_URLCONF = 'site_demo.urls'
 
 TEMPLATES = [
@@ -51,24 +64,40 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'site_demo.wsgi.application'
 
-# Banco de Dados
+# -----------------------------
+# DATABASE
+# -----------------------------
+DATABASE_URL = os.environ.get(
+    'DATABASE_URL',
+    'postgresql://usuario:senha@host:5432/banco'
+)
+
 DATABASES = {
-    'default': dj_database_url.parse(
-        os.environ.get('DATABASE_URL'),
-        conn_max_age=600,
-        ssl_require=True  # força SSL, necessário no Render
-    )
+    'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600)
 }
 
-# Arquivos estáticos e de mídia
+# Força SSL para PostgreSQL no Render
+DATABASES['default']['OPTIONS'] = {'sslmode': 'require'}
+
+# -----------------------------
+# STATIC & MEDIA
+# -----------------------------
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'static']
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Email (dev)
+# WhiteNoise
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# -----------------------------
+# EMAIL (DEV)
+# -----------------------------
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-# Para Render
+# -----------------------------
+# SECURITY PROXY
+# -----------------------------
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
