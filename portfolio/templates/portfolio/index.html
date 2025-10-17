@@ -1,0 +1,78 @@
+{% extends "portfolio/base.html" %}
+{% block content %}
+<div class="row align-items-center mb-4">
+  <div class="col-md-3">
+    {% if settings.profile_image %}
+      <img src="{{ settings.profile_image.url }}" alt="Foto" class="img-fluid rounded-circle">
+    {% else %}
+      <img src="https://via.placeholder.com/300" class="img-fluid rounded-circle" alt="placeholder">
+    {% endif %}
+  </div>
+  <div class="col-md-9">
+    <h1>{{ settings.site_name }}</h1>
+    <p class="lead">{{ settings.subtitle }}</p>
+    <p>{{ settings.about_text }}</p>
+    <p>
+      {% if settings.linkedin %}<a href="{{ settings.linkedin }}" target="_blank">LinkedIn</a>{% endif %}
+      {% if settings.github %} | <a href="{{ settings.github }}" target="_blank">GitHub</a>{% endif %}
+    </p>
+  </div>
+</div>
+
+<hr>
+
+<h2>Projetos</h2>
+<div class="row">
+  {% for p in projects %}
+  <div class="col-md-4 mb-3">
+    <div class="card">
+      {% if p.image %}
+      <img src="{{ p.image.url }}" class="card-img-top" alt="{{ p.title }}">
+      {% endif %}
+      <div class="card-body">
+        <h5 class="card-title">{{ p.title }}</h5>
+        <p class="card-text">{{ p.description }}</p>
+        {% if p.link %}<a href="{{ p.link }}" target="_blank" class="btn btn-sm btn-primary">Ver</a>{% endif %}
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <p>Sem projetos ainda.</p>
+  {% endfor %}
+</div>
+
+<hr>
+<h2>Experiência & Educação</h2>
+<div class="row">
+  <div class="col-md-6">
+    <h4>Experiência</h4>
+    {% for e in experiences %}
+      <div class="mb-3">
+        <h5>{{ e.title }} — {{ e.company }}</h5>
+        <p>{{ e.start_date }} {% if e.end_date %}- {{ e.end_date }}{% endif %}</p>
+        <p>{{ e.description }}</p>
+      </div>
+    {% empty %}
+      <p>Sem experiências adicionadas.</p>
+    {% endfor %}
+  </div>
+  <div class="col-md-6">
+    <h4>Educação</h4>
+    {% for ed in educations %}
+      <div class="mb-3">
+        <h5>{{ ed.degree }} — {{ ed.institution }}</h5>
+        <p>{{ ed.start_date }} {% if ed.end_date %}- {{ ed.end_date }}{% endif %}</p>
+        <p>{{ ed.details }}</p>
+      </div>
+    {% empty %}
+      <p>Sem educação adicionada.</p>
+    {% endfor %}
+  </div>
+</div>
+
+<hr>
+<h2>Contato</h2>
+<p>Envie uma mensagem pelo formulário:</p>
+<a href="{% url 'contact' %}" class="btn btn-outline-primary">Contato</a>
+
+{% endblock %}
