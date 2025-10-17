@@ -5,7 +5,7 @@ import dj_database_url
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Segurança
-SECRET_KEY = os.environ.get('DJ_SECRET_KEY', 'bal14teR')
+SECRET_KEY = os.environ.get('DJ_SECRET_KEY', 'chave-padrao-para-dev')
 DEBUG = os.environ.get('DJ_DEBUG', 'True') == 'True'
 ALLOWED_HOSTS = ['*']  # Em produção, coloque apenas os domínios permitidos
 
