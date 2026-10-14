@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.pyc
+db.sqlite3
+.secret-key
+staticfiles/
+
+node_modules/
+.npm-cache/
+
+# Local-only previews and secrets
+preview/
+.env
+.env.*
+!.env.example
+*.log
