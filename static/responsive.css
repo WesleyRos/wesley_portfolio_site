@@ -1,0 +1,63 @@
+/* Shared sizing and navigation across phone, tablet and desktop. */
+img,svg{max-width:100%}
+main,.hero-center,.data-network,.personal-about-copy,.project-card,.tool{min-width:0}
+.section p,.resume-panel,.project-body{overflow-wrap:anywhere}
+.floating-navigation nav{min-width:0}
+select:focus-visible{outline:2px solid #b99af1;outline-offset:3px}
+@media(max-width:1100px) and (min-width:761px){
+ .network-hero{gap:24px;padding-left:24px;padding-right:24px;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr)}
+ .network-hero .hero-name{font-size:clamp(44px,5.5vw,62px)}
+ .network-hero .hero-role{font-size:19px}
+ .network-heading{flex-wrap:wrap}
+ .network-open-project{margin-top:0}
+ .personal-about-layout{gap:30px;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr)}
+}
+@media(max-width:790px){
+ body{padding-top:132px}
+ html{scroll-padding-top:145px}
+ .floating-navigation{top:10px;width:calc(100% - 24px);min-height:0;padding:8px!important;gap:6px;flex-wrap:nowrap;align-items:center}
+ .floating-navigation nav{width:auto;flex:1;flex-wrap:wrap;justify-content:center;overflow:visible;padding:4px;border-radius:16px;white-space:normal}
+ .floating-navigation nav a{padding:10px 9px;min-height:36px;font-size:12px}
+ .display-toggle{width:40px;height:40px}
+}
+@media(max-width:760px){
+ .network-hero{width:100%;margin-left:0;margin-top:0;min-height:0;padding:18px 20px 54px;gap:32px;grid-template-columns:minmax(0,1fr)}
+ .network-hero .hero-center{max-width:none}
+ .network-hero .hero-name{font-size:clamp(44px,10vw,68px);letter-spacing:-2px}
+ .network-hero .hero-greeting{font-size:10px;letter-spacing:3px}
+ .network-hero .hero-role{font-size:20px;max-width:none}
+ .network-hero .hero-description{font-size:15px;max-width:none}
+ .network-hero .hero-actions{gap:10px}
+ .network-hero .button{min-height:44px;padding:13px 17px}
+ .data-network{max-width:none;width:100%}
+ .spatial-network .network-heading{flex-wrap:wrap;gap:12px}
+ .spatial-network .network-heading h2{font-size:20px!important;overflow-wrap:anywhere}
+ .network-open-project{min-height:44px;margin-top:0}
+ .spatial-network .network-stage{height:320px}
+ .agro-explorer{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+ .agro-explorer label{min-width:0}
+ .agro-explorer select{min-width:0;min-height:44px}
+ .agro-explorer button{grid-column:1/-1;min-height:44px}
+ .network-zoom button,.spatial-network .network-zoom #network-motion{width:36px;height:36px}
+ #network-expand{min-height:40px}
+ .personal-about-layout{grid-template-columns:minmax(0,1fr);gap:28px}
+ .about-portrait{width:100%;max-width:420px;min-height:0;justify-self:center}
+ .project-grid{grid-template-columns:minmax(0,1fr)}
+ .section-heading{align-items:flex-start;flex-direction:column}
+ .section h2{font-size:clamp(29px,7vw,38px)}
+ .resume-panel{padding:20px}
+ .toolbox{margin:0 12px}
+ .footer{flex-direction:column}
+ .network-stage:fullscreen .agro-insight:not([hidden]){width:min(230px,calc(100% - 32px));left:16px;top:66px}
+}
+@media(max-width:380px){
+ body{padding-top:154px}
+ html{scroll-padding-top:170px}
+ .network-hero{padding-left:14px;padding-right:14px}
+ .floating-navigation nav a{font-size:11px;padding:9px 7px}
+ .spatial-network{padding:16px 12px!important}
+ .spatial-network .network-stage{height:290px}
+ .agro-explorer{grid-template-columns:minmax(0,1fr)}
+ .network-hero .hero-actions .button{width:100%}
+ .section{padding-left:18px;padding-right:18px}
+}
